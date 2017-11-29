@@ -1,7 +1,7 @@
 <template>
   <div class="recommend">
     <!-- <div> -->
-      <div class="slider-wrapper">
+      <div v-if="recommends.length" class="slider-wrapper">
          <slider>
            <div v-for="(item,index) in recommends" :key="index">
               <a :href="item.linkUrl">
@@ -20,6 +20,7 @@
 <script type="text/ecmascript-6">
 /**
  * 知识点：1.jsonp,promise,Obiect.assign(),公共部分抽离
+ *        2.better-scroll,ref,props, 生命周期
  */
 
 import { getRecommend } from "api/recommend"
