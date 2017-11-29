@@ -15,15 +15,16 @@ module.exports = {
         path: config.build.assetsRoot,
         filename: '[name].js',
         publicPath: process.env.NODE_ENV === 'production' ?
-            config.build.assetsPublicPath :
-            config.dev.assetsPublicPath
+            config.build.assetsPublicPath : config.dev.assetsPublicPath
     },
     resolve: {
         extensions: ['.js', '.vue', '.json'],
         alias: {
             '@': resolve('src'),
             'common': resolve('src/common'),
-            'components': resolve('src/components')
+            'components': resolve('src/components'),
+            'api': resolve('src/api'),
+            'base': resolve('src/base')
         }
     },
     module: {
