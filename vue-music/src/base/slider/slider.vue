@@ -44,7 +44,6 @@ export default {
           this._setSliderWidth()
           this._initDots()          
           this._initSlider()
-          console.log(this)
           this.autoplay && this._play()
       },20)
 
@@ -60,11 +59,11 @@ export default {
       this.autoplay && this._play()      
   },
   deactived(){
-      this.slide.disable()
+    //   this.slide.disable()
       clearTimeout(this.timer)
   },
   beforeDestroy(){
-      this.slide.disable()
+    //   this.slide.disable()
       clearTimeout(this.timer)
   },
   methods:{
