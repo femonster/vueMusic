@@ -38,6 +38,8 @@
 /**
  * 知识点：1.jsonp,promise,Obiect.assign(),公共部分抽离
  *        2.better-scroll,ref,props, 生命周期
+ *        3.keep-alive， 通过后端代理方式，获取歌单列表（dev-server.js,axios）
+ *        4.flex布局，better-scroll
  */
 import Loading from 'base/loading/loading'
 import Scroll from 'base/scroll/scroll'
