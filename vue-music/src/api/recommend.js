@@ -15,7 +15,23 @@ export function getRecommend() {
 }
 
 export function getDiscList() {
+    const url = '/api/getDiscList'
 
+    const data = Object.assign({}, commonParams, {
+        platform: 'yqq',
+        hostUin: 0,
+        sin: 0,
+        ein: 29,
+        sortId: 5,
+        needNewCode: 0,
+        categoryId: 10000000,
+        rnd: Math.random(),
+        format: 'json'
+    })
+
+    return axios.get(url, {
+        params: data
+    }).then((res) => {
+        return Promise.resolve(res.data)
+    })
 }
-// 1.先获取jsonp的数据（jsonp 的知识）
-// 2.再利用 better-scroll 做slider组件（better-scroll，prop，ref，solt）

@@ -17,3 +17,22 @@ extend-click()
         left: -10px
         right: -10px
         bottom: -10px
+
+vendor(prop, args)
+    -webkit-{prop} args
+    -moz-{prop} args
+    -o-{prop} args
+    {prop} args
+
+animation()
+    vendor('animation',arguments) 
+
+animation-delay()
+    vendor('animation-delay',arguments)
+
+transform()
+    vendor('transform',arguments)
+
+box-sizing()
+    vendor("box-sizing",arguments)
+
