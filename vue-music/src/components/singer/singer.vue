@@ -1,6 +1,6 @@
 <template>
-  <div>
-    歌手页面
+  <div class="singer" ref="singer">
+      <list-view :ldata="singers"></list-view>
   </div>
 </template>
 
@@ -8,8 +8,9 @@
 import {getSingerList} from 'api/singer'
 import {ERR_OK} from 'api/config'
 import Singer from 'common/js/singer'
-
+import ListView from 'base/listview/listview'
 const HOT_NAME = '热门'
+// 热门截取返回数据的前十
 const HOT_SINGER_LEN = 10
 
 export default {
@@ -25,11 +26,12 @@ export default {
     _getSingerList(){
       getSingerList().then((res)=>{
         if (res.code===ERR_OK) {
-          console.log(this._normalizeSinger(res.data.list))
+          this.singers = this._normalizeSinger(res.data.list)
         }
       })
     },
     _normalizeSinger(list){
+      // 热门
       let map = {
         hot:{
           title:HOT_NAME,
@@ -43,6 +45,7 @@ export default {
             id:item.Fsinger_mid
           }))
         }
+        // A-Z
         const key = item.Findex
         if (!map[key]) {
           map[key] = {
@@ -75,6 +78,9 @@ export default {
 
       return hot.concat(ret)
     }
+  },
+  components:{
+    ListView
   }
 }
 </script>
