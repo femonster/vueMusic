@@ -24,7 +24,7 @@ export default {
       },
       autoplay:{
           type:Boolean,
-          default:true
+          default:false
       },
       interval:{
           type:Number,
@@ -90,14 +90,14 @@ export default {
       },
       _initSlider(){
           this.slider = new BScroll(this.$refs.slider,{
-            //   scrollX:true,
+              scrollX:true,
               scrollY:true,
-            //   momentum:false,
-            //   snap:{
-            //       loop:this.loop,
-            //       threshold:0.3,
-            //       speed:400
-            //   },
+              momentum:false,
+              snap:{
+                  loop:this.loop,
+                  threshold:0.3,
+                  speed:400
+              },
               click: true
           })
 
@@ -107,7 +107,7 @@ export default {
                   pageIndex -= 1
               }
               this.currentPageIndex = pageIndex
-
+              console.log(pageIndex,this.currentPageIndex);
               this.autoplay && this._play()                    
               
           })
