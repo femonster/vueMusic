@@ -29,14 +29,22 @@
                     >{{item}}</li>
             </ul>
         </div>
+        <div class="list-fixed" ref="fixed" v-show="fixedTitle">
+            <div class="fixed-title">{{fixedTitle}} </div>
+        </div>
+        <div v-show="!ldata.length" class="loading-container">
+            <loading></loading>
+        </div>
     </scroll>
 </template>
 <script>
 import Scroll from 'base/scroll/scroll'
-
+import Loading from 'base/loading/loading'
 // 导航字母的高度
 const ANCHOR_HEIGHT = 18
 
+// 字母标题的高度
+const TITLE_HEIGHT = 30
 export default {
     props:{
         ldata:{
@@ -52,7 +60,7 @@ export default {
             currentIndex:0,
             // 滚动的Y值
             scrollY:-1,
-            diff:-1
+            diff:-1,
         }
     },
     created(){
@@ -67,6 +75,13 @@ export default {
             return this.ldata.map((item)=>{
                 return item.title.substr(0,1)
             })
+        },
+        // 固定导航
+        fixedTitle(){
+            if(this.scrollY>0){
+                return ''
+            }
+            return this.ldata[this.currentIndex]?this.ldata[this.currentIndex].title:''
         }
     },
     methods:{
@@ -103,6 +118,18 @@ export default {
           }
       },
         _scrollTo(index){
+            // 不存在判断
+            if(!index && index !== 0){
+                return
+            }
+            // 边界值判断
+            if(index<0){
+                index = 0
+            }else if(index>this.listHeight.length -1){
+                index = this.listHeight.length - 1
+            }
+
+            this.scrollY = -this.listHeight[index]
             this.$refs.listview.scrollToElement(this.$refs.listGroup[index],0)
         }
     },
@@ -113,11 +140,12 @@ export default {
             },20)
         },
         scrollY(newY){
-            console.log(this.currentIndex)
             const listHeight = this.listHeight
+             
             // 滚动到顶部 newY>0
             if(newY>0){
                 this.currentIndex = 0
+                
                 return
             }
             // 在中间滚动
@@ -126,19 +154,30 @@ export default {
                 let h2 = listHeight[i+1]
                 if(-newY >= h1 && -newY < h2){
                     this.currentIndex = i
+                    // 新值 - 下限 = 与title的差值
+                    this.diff = h2 + newY
                     return
                 }
             }
 
             // 当滚动到底部
-            this.currentIndex = listHeight.length-2
-
+            this.currentIndex = listHeight.length-1
+           
             
 
+        },
+        diff(newVal){
+            let fixedTop = (newVal>0 && newVal<TITLE_HEIGHT)?newVal - TITLE_HEIGHT : 0
+            if(this.fixedTop === fixedTop){
+                return
+            }
+            this.fixedTop = fixedTop
+            this.$refs.fixed.style.transform = `translate3d(0,${fixedTop}px,0)`
         }
     },
     components:{
-        Scroll
+        Scroll,
+        Loading
     }
 }
 </script>
@@ -192,5 +231,23 @@ export default {
             font-size $font-size-small
             &.current
                 color: $color-theme
+    .list-fixed
+        position absolute
+        top 0
+        left 0
+        width 100%
+        .fixed-title
+            height 30px
+            line-height 30px
+            padding-left 20px
+            font-size: $font-size-small
+            color: $color-text-l
+            background: $color-highlight-background
+    .loading-container
+        position absolute
+        width 100%
+        top 50%
+        transform translateY(-50%)
+
 </style>
 
