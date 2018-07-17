@@ -1,6 +1,6 @@
 <template>
     <transition name="slide">
-        <music-list></music-list>
+        <music-list :songs="songs" :title="title" :bg-image="bgImage"></music-list>
     </transition>
 </template>
 <script>
@@ -13,13 +13,19 @@ import {createSong} from 'common/js/song'
 export default {
     data(){
         return {
-
+            songs:[]
         }
     },
     computed:{
         ...mapGetters([
             'singer'
-        ])
+        ]),
+        title(){
+            return this.singer.name
+        },
+        bgImage(){
+            return this.singer.avatar
+        }
     },
     created(){
         this._getDetail()
