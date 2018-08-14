@@ -35,8 +35,12 @@
 import Scroll from 'base/scroll/scroll'
 import Loading from 'base/loading/loading'
 import songList from 'base/song-list/song-list'
+import {prefixStyle} from 'common/js/dom'
 
 const RESERVED_HEIGHT = 40
+// prefixStyle
+const filter = prefixStyle('filter')
+const transform = prefixStyle('transform')
 
 export default {
     props:{
@@ -84,12 +88,27 @@ export default {
         scrollY(newVal){
             let translateY = Math.max(this.minTranslateY,newVal)
             let zIndex = 0
-            this.$refs.layer.style['transform'] = `translate3d(0,${translateY}px,0)`
-            this.$refs.layer.style['webkitTransform'] = `translate3d(0,${translateY}px,0)`
-
-            if(newVal<this.minTranslateY){
-                // 当到边界时
+            let percent = Math.abs(newVal/this.imageHeight)
+            let scale = 1+percent
+            let blur = 0
+            
+            if(newVal > 0){
+                this.$refs.bgImage.style[transform] = `scale(${scale})`
                 zIndex = 10
+            }else{
+                blur = Math.min(20, percent * 20)
+            }
+
+            this.$refs.bgImage.style[filter] = `blur(${blur}px)`
+            this.$refs.layer.style[transform] = `translate3d(0,${translateY}px,0)`
+
+                
+            if(newVal<this.minTranslateY){
+                // 当到顶部边界时
+                zIndex = 10
+
+                this.$refs.bgImage.style[filter] = `blur(0px)`
+
                 this.$refs.bgImage.style.paddingTop = 0
                 this.$refs.bgImage.style.height = `${RESERVED_HEIGHT}px`
                 this.$refs.playBtn.style.display = 'none'
