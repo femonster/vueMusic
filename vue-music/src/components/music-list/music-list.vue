@@ -14,12 +14,12 @@
             <div class="filter" ref="filter"></div>
         </div>
         <div class="bg-layer" ref="layer"></div>
-        <scroll 
+        <scroll
         :data="songs"
         @scroll="scroll"
         :listen-scroll="listenScroll"
         :probe-type="probeType"
-        class="list" 
+        class="list"
         ref="list"
         >
             <div class="song-list-wrapper">
@@ -56,7 +56,7 @@ export default {
         title:{
             type:String,
             default:""
-        }    
+        }
     },
     data(){
         return {
@@ -85,10 +85,11 @@ export default {
             this.scrollY = pos.y
         },
         selectItem(item,index){
-            this.selectPlay({
-                list:this.songs,
-                index
-            })
+          this.selectPlay({
+              list:this.songs,
+              index
+          })
+          console.log(this.songs[index])
         },
         ...mapActions([
             'selectPlay',
@@ -101,7 +102,7 @@ export default {
             let percent = Math.abs(newVal/this.imageHeight)
             let scale = 1+percent
             let blur = 0
-            
+
             if(newVal > 0){
                 this.$refs.bgImage.style[transform] = `scale(${scale})`
                 zIndex = 10
@@ -112,7 +113,7 @@ export default {
             this.$refs.bgImage.style[filter] = `blur(${blur}px)`
             this.$refs.layer.style[transform] = `translate3d(0,${translateY}px,0)`
 
-                
+
             if(newVal<this.minTranslateY){
                 // 当到顶部边界时
                 zIndex = 10
@@ -149,7 +150,7 @@ export default {
     bottom: 0
     right: 0
     background: $color-background
-    .back 
+    .back
         position absolute
         top 0
         left 6px
@@ -157,36 +158,36 @@ export default {
         .icon-back
             display block
             padding 10px
-            font-size $font-size-large-x 
+            font-size $font-size-large-x
             color $color-theme
     .title
         position absolute
         top 0
-        left 10% 
-        z-index 40 
-        width 80% 
+        left 10%
+        z-index 40
+        width 80%
         no-wrap()
         text-align center
         line-height 40px
-        font-size $font-size-large 
+        font-size $font-size-large
         color $color-text
     .bg-image
         position relative
-        width 100% 
+        width 100%
         height 0
-        padding-top 70% 
-        transform-origin top 
+        padding-top 70%
+        transform-origin top
         background-size cover
         .play-wrapper
             position absolute
             bottom 20px
             z-index 50
             width 100%
-            .play 
+            .play
                 box-sizing border-box
                 width 135px
                 padding 7px 0
-                margin 0 auto 
+                margin 0 auto
                 text-align center
                 border 1px solid $color-theme
                 color $color-theme
@@ -196,11 +197,11 @@ export default {
                     display inline-block
                     vertical-align middle
                     margin-right 6px
-                    font-size $font-size-medium-x 
-                .text 
+                    font-size $font-size-medium-x
+                .text
                     display inline-block
                     vertical-align middle
-                    font-size $font-size-small 
+                    font-size $font-size-small
         .filter
             position: absolute
             top: 0
@@ -212,7 +213,7 @@ export default {
         position: relative
         height: 100%
         background: $color-background
-    .list 
+    .list
         position fixed
         top 0
         bottom 0

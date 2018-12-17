@@ -60,7 +60,7 @@ export default {
           map[key] = {
             title : key,
             items:[]
-          }          
+          }
         }
 
         map[key].items.push(new Singer({
